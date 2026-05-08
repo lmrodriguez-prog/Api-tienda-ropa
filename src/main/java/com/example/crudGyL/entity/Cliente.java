@@ -2,6 +2,8 @@ package com.example.crudGyL.entity;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Entity
@@ -17,4 +19,15 @@ public class Cliente {
     private String correo;
     private String telefono;
     private String direccion;
+
+    public void setEmail(@NotBlank(message = "El email es obligatorio") @Email(message = "Debe ser un email válido") String email) {
+    }
+
+    public String getEmail() {
+
+        String String = "";
+        return String;
+    }
 }
+
+        
