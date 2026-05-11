@@ -6,5 +6,11 @@ import lombok.Data;
 public class ClienteResponseDto {
     private Long id;
     private String nombre;
-    private String email;
-}
+    private String apellido;
+    private String correo;
+    private String telefono;
+    private String direccion;
+    private Boolean estadoCLiente;
+
+    }
+

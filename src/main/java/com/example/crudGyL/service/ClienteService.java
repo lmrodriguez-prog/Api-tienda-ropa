@@ -9,4 +9,9 @@ public interface ClienteService {
     List<ClienteResponseDto> listarTodos();
     ClienteResponseDto buscarPorId(Long id);
     void eliminar(Long id);
+
+    ClienteResponseDto actualizar(Long id, ClienteRequestDto dto);
+    void bajaLogica(Long id);
+
+    ClienteResponseDto actualizar(Long id);
 }

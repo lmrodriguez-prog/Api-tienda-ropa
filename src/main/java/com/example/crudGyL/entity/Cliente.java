@@ -12,7 +12,7 @@ import lombok.Data;
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idCliente;
+    private Long id_cliente;
 
     private String nombre;
     private String apellido;
@@ -20,14 +20,10 @@ public class Cliente {
     private String telefono;
     private String direccion;
 
-    public void setEmail(@NotBlank(message = "El email es obligatorio") @Email(message = "Debe ser un email válido") String email) {
-    }
+    @Column(name = "estado_cliente")
+    private Boolean estadoCliente = true;
 
-    public String getEmail() {
 
-        String String = "";
-        return String;
-    }
 }
 
         

@@ -1,6 +1,7 @@
 package com.example.crudGyL.exception;
 
 import com.example.crudGyL.dto.ApiErrorDto;
+import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -22,7 +23,18 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
-  
+    // 400
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<ApiErrorDto> manejarBadRequest(BadRequestException ex) {
+        ApiErrorDto error = new ApiErrorDto(
+                ex.getMessage(),
+                HttpStatus.BAD_REQUEST.value(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+
     @ExceptionHandler(org.springframework.web.bind.MethodArgumentNotValidException.class)
     public ResponseEntity<ApiErrorDto> manejarValidaciones(org.springframework.web.bind.MethodArgumentNotValidException ex) {
         ApiErrorDto error = new ApiErrorDto(

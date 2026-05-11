@@ -20,7 +20,34 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     public ClienteResponseDto crear(ClienteRequestDto dto) {
         Cliente cliente = ClienteMapper.toEntity(dto);
+        cliente.setEstadoCliente(true);
         return ClienteMapper.toResponseDto(clienteRepository.save(cliente));
+    }
+
+    // Lógica para el PUT (Actualizar todo)
+    @Override
+    public ClienteResponseDto actualizar(Long id, ClienteRequestDto dto) {
+        Cliente clienteExistente = clienteRepository.findById(id)
+                .orElseThrow(() -> new RecursosNoEncontradoException("No existe el cliente con ID: " + id));
+
+        // Actualizamos los datos usando el DTO
+        clienteExistente.setNombre(dto.nombre());
+        clienteExistente.setApellido(dto.apellido());
+        clienteExistente.setCorreo(dto.email());
+        clienteExistente.setTelefono(dto.telefono());
+        clienteExistente.setDireccion(dto.direccion());
+
+        return ClienteMapper.toResponseDto(clienteRepository.save(clienteExistente));
+    }
+
+    // Lógica para el PATCH (Baja Lógica)
+    @Override
+    public void bajaLogica(Long id) {
+        Cliente cliente = clienteRepository.findById(id)
+                .orElseThrow(() -> new RecursosNoEncontradoException("ID no encontrado para dar de baja"));
+
+        cliente.setEstadoCliente(false); // Solo apagamos el estado
+        clienteRepository.save(cliente);
     }
 
     @Override
@@ -43,5 +70,10 @@ public class ClienteServiceImpl implements ClienteService {
             throw new RecursosNoEncontradoException("No se puede eliminar: Cliente no existe");
         }
         clienteRepository.deleteById(id);
+    }
+
+    @Override
+    public ClienteResponseDto actualizar(Long id) {
+        return null;
     }
 }
