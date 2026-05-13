@@ -8,5 +8,5 @@ public class DetalleVentaResponseDto {
     private String nombreProducto;
     private Integer cantidad;
     private Double precioUnitario;
-    private Double subtotal; // Cantidad x Precio
+    private Double subtotal;
 }

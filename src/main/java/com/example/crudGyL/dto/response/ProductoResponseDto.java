@@ -8,5 +8,5 @@ public class ProductoResponseDto {
         private String nombre;
         private Double precio;
         private Integer stock;
-        private String nombreTipo; // Para que muestre "Vestido" y no solo un número
+        private String nombreTipo;
 }

@@ -6,7 +6,6 @@ import com.example.crudGyL.entity.Cliente;
 
 public class ClienteMapper {
 
-    // Para el POST y el PUT (De pedido a base de datos)
     public static Cliente toEntity(ClienteRequestDto dto) {
         if (dto == null) return null;
 

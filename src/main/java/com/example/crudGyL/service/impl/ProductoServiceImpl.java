@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor // Genera el constructor automáticamente
+@RequiredArgsConstructor
 public class ProductoServiceImpl implements ProductoService {
 
     private final ProductoRepository productoRepository;
@@ -23,12 +23,12 @@ public class ProductoServiceImpl implements ProductoService {
 
     @Override
     public ProductoResponseDto crear(ProductoRequestDto dto) {
-        // Buscamos el tipo de producto para que no sea null
+
         TipoProducto tipo = tipoProductoRepository.findById(dto.idTipoProducto())
                 .orElseThrow(() -> new RecursosNoEncontradoException("No existe la categoría con ID: " + dto.idTipoProducto()));
 
         Producto producto = ProductoMapper.toEntity(dto);
-        producto.setTipoProducto(tipo); // <--- Esto une el vestido con su categoría
+        producto.setTipoProducto(tipo);
 
         Producto guardado = productoRepository.save(producto);
         return ProductoMapper.toResponseDto(guardado);
@@ -54,10 +54,8 @@ public class ProductoServiceImpl implements ProductoService {
         Producto producto = productoRepository.findById(id)
                 .orElseThrow(() -> new RecursosNoEncontradoException("No se encontró el Producto con ID: " + id));
 
-        // El Mapper actualiza los campos (incluyendo el precio de 5000 a 3000)
         ProductoMapper.updateEntity(producto, dto);
 
-        // Si cambió la categoría, la actualizamos también
         TipoProducto tipo = tipoProductoRepository.findById(dto.idTipoProducto())
                 .orElseThrow(() -> new RecursosNoEncontradoException("No existe la categoría con ID: " + dto.idTipoProducto()));
         producto.setTipoProducto(tipo);
@@ -81,4 +79,17 @@ public class ProductoServiceImpl implements ProductoService {
                 .map(ProductoMapper::toResponseDto)
                 .toList();
     }
+
+    public void desactivar(Long id) {
+        Producto p = productoRepository.findById(id).orElseThrow();
+        p.setActivo(false);
+        productoRepository.save(p);
+    }
+
+    public void activar(Long id) {
+        Producto p = productoRepository.findById(id).orElseThrow();
+        p.setActivo(true);
+        productoRepository.save(p);
+    }
+
 }

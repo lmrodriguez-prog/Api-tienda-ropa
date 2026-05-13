@@ -24,13 +24,13 @@ public class ClienteServiceImpl implements ClienteService {
         return ClienteMapper.toResponseDto(clienteRepository.save(cliente));
     }
 
-    // Lógica para el PUT (Actualizar todo)
+    // Lógica para put
     @Override
     public ClienteResponseDto actualizar(Long id, ClienteRequestDto dto) {
         Cliente clienteExistente = clienteRepository.findById(id)
                 .orElseThrow(() -> new RecursosNoEncontradoException("No existe el cliente con ID: " + id));
 
-        // Actualizamos los datos usando el DTO
+        // Actualizo datos usando DTO
         clienteExistente.setNombre(dto.nombre());
         clienteExistente.setApellido(dto.apellido());
         clienteExistente.setCorreo(dto.email());
@@ -40,7 +40,7 @@ public class ClienteServiceImpl implements ClienteService {
         return ClienteMapper.toResponseDto(clienteRepository.save(clienteExistente));
     }
 
-    // Lógica para el PATCH (Baja Lógica)
+
     @Override
     public void bajaLogica(Long id) {
         Cliente cliente = clienteRepository.findById(id)

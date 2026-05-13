@@ -24,7 +24,7 @@ public class VentaServiceImpl implements VentaService {
     private final ProductoRepository productoRepository;
 
     @Override
-    @Transactional // <--- CLAVE: Asegura que la venta sea "todo o nada"
+    @Transactional
     public VentaResponseDto realizarVenta(VentaRequestDto dto) {
         // 1. Buscar Cliente
         Cliente cliente = clienteRepository.findById(dto.idCliente())
@@ -47,11 +47,9 @@ public class VentaServiceImpl implements VentaService {
                 throw new RuntimeException("Stock insuficiente para: " + producto.getNombre());
             }
 
-            //Resto stock
             producto.setStock(producto.getStock() - detalleDto.cantidad());
             productoRepository.save(producto);
 
-            //Se crea el renglón del detalle
             DetalleVenta detalle = new DetalleVenta();
             detalle.setVenta(venta);
             detalle.setProducto(producto);

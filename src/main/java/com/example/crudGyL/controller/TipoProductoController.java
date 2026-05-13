@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/categorias")
+@RequestMapping("/api/tipo-productos")
 @RequiredArgsConstructor
 public class TipoProductoController {
 
@@ -33,11 +33,9 @@ public class TipoProductoController {
         return tipoProductoService.buscarPorId(id);
     }
 
-    // Para categorías también podemos usar PATCH para darlas de baja
     @PatchMapping("/{id}/desactivar")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void desactivar(@PathVariable Long id) {
-        // Suponiendo que implementaste eliminar en el service de tipos
         tipoProductoService.eliminar(id);
     }
 }

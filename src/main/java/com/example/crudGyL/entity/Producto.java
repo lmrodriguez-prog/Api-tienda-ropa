@@ -18,4 +18,6 @@ public class Producto {
     @ManyToOne
     @JoinColumn(name = "id_tipo_producto")
     private TipoProducto tipoProducto;
+
+    private Boolean activo = true;
 }

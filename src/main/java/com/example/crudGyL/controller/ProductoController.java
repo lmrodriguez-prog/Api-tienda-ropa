@@ -27,19 +27,34 @@ public class ProductoController {
         return productoService.listar();
     }
 
-    @PutMapping("/{id}") // Actualización TOTAL
+    @PutMapping("/{id}")
     public ProductoResponseDto actualizar(@PathVariable Long id, @Valid @RequestBody ProductoRequestDto dto) {
         return productoService.actualizar(id, dto);
     }
 
-    @PatchMapping("/{id}/desactivar") // PATCH para BAJA LÓGICA
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void desactivar(@PathVariable Long id) {
+    public void eliminar(@PathVariable Long id) {
         productoService.eliminar(id);
     }
 
     @GetMapping("/{id}")
     public ProductoResponseDto buscarPorId(@PathVariable Long id) {
         return productoService.buscarPorId(id);
+    }
+
+
+    // DESACTIVAR
+    @PatchMapping("/{id}/desactivar")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void desactivar(@PathVariable Long id) {
+        productoService.desactivar(id);
+    }
+
+    // ACTIVAR
+    @PatchMapping("/{id}/activar")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void activar(@PathVariable Long id) {
+        productoService.activar(id);
     }
 }
